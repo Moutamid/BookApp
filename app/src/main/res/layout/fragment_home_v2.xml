@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".view.fragments.HomeFragmentV2"
+    android:id="@+id/homeSRL"
+    android:background="@color/colorBlackBG">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/half_dimen"
+                android:fillViewport="true"
+                android:orientation="vertical"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <include
+                        android:id="@+id/noConnectionLL"
+                        layout="@layout/dialog_error_layout"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <include
+                            layout="@layout/custom_categories"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/default_dimen"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textview9"
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_15"
+                                android:fontFamily="@font/bold"
+                                android:alpha="0.9"
+                                android:text="Young Fiction ebooks"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/heading" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/fictionRV"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/half_dimen"
+                                android:paddingRight="@dimen/half_dimen"
+                                android:scrollbars="none"
+                                android:visibility="gone" />
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/fictionShimmer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:shimmer_duration="800">
+
+                                <include layout="@layout/shimmer_custom_book_home" />
+
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+                            <TextView
+                                android:id="@+id/fictionErr"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:gravity="center"
+                                android:text="Error."
+                                android:textColor="@color/colorWhite"
+                                android:alpha="0.7"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/default_dimen"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textview4"
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_15"
+                                android:alpha="0.9"
+                                android:fontFamily="@font/bold"
+                                android:text="Fall for these romantic ebooks"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/heading" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/romanceRV"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/half_dimen"
+                                android:paddingRight="@dimen/half_dimen"
+                                android:scrollbars="none"
+                                android:visibility="gone" />
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/romanceShimmer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:shimmer_duration="800">
+
+                                <include layout="@layout/shimmer_custom_book_home" />
+
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+                            <TextView
+                                android:id="@+id/romanceErr"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:gravity="center"
+                                android:text="Error."
+                                android:textColor="@color/colorWhite"
+                                android:alpha="0.7"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/default_dimen"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textview8"
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_15"
+                                android:fontFamily="@font/bold"
+                                android:alpha="0.9"
+                                android:text="Suspense, Horror &amp; Thrillers"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/heading" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/thrillerRV"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/half_dimen"
+                                android:paddingRight="@dimen/half_dimen"
+                                android:scrollbars="none"
+                                android:visibility="gone" />
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/thrillerShimmer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:shimmer_duration="800">
+
+                                <include layout="@layout/shimmer_custom_book_home" />
+
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+                            <TextView
+                                android:id="@+id/thrillerErr"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:gravity="center"
+                                android:text="Error."
+                                android:textColor="@color/colorWhite"
+                                android:alpha="0.7"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/default_dimen"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_15"
+                                android:fontFamily="@font/bold"
+                                android:text="Self-Help Books"
+                                android:alpha="0.9"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/heading" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/selfHelpRV"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/half_dimen"
+                                android:paddingRight="@dimen/half_dimen"
+                                android:scrollbars="none"
+                                android:visibility="gone" />
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/selfHelpShimmer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:shimmer_duration="800">
+
+                                <include layout="@layout/shimmer_custom_book_home" />
+
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+                            <TextView
+                                android:id="@+id/historyErr"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:gravity="center"
+                                android:text="Error."
+                                android:textColor="@color/colorWhite"
+                                android:alpha="0.7"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/default_dimen"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/textview12"
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_15"
+                                android:fontFamily="@font/bold"
+                                android:text="Children's"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/heading" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/childrensRV"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/half_dimen"
+                                android:paddingRight="@dimen/half_dimen"
+                                android:scrollbars="none"
+                                android:visibility="gone" />
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/childrenShimmer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:shimmer_duration="800">
+
+                                <include layout="@layout/shimmer_custom_book_home" />
+
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+                            <TextView
+                                android:id="@+id/childrenErr"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:gravity="center"
+                                android:text="Error."
+                                android:textColor="@color/colorWhite"
+                                android:alpha="0.7"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
