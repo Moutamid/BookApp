@@ -2,6 +2,8 @@ package com.bevstudio.wolfbooksapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +11,11 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bevstudio.wolfbooksapp.R;
 import com.bevstudio.wolfbooksapp.helper.Constant;
-import com.bevstudio.wolfbooksapp.request.db.DatabaseHelper;
 import com.bevstudio.wolfbooksapp.model.api.Item;
 import com.bevstudio.wolfbooksapp.model.db.VolumeBooks;
 import com.bevstudio.wolfbooksapp.request.api.RequestService;
@@ -24,20 +23,22 @@ import com.bevstudio.wolfbooksapp.request.api.RetrofitClass;
 import com.bevstudio.wolfbooksapp.vendor.NumberFormatter;
 import com.bevstudio.wolfbooksapp.view.activity.BookInfoActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
-
+import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BookmarksRecyclerviewAdapter extends RecyclerView.Adapter<BookmarksRecyclerviewAdapter.ViewHolder> {
+
     private Context context;
     private List<VolumeBooks> localVolumeBooks;
     private Call<Item> itemCall, itemCall1, itemCall2;
     private RequestService requestService = RetrofitClass.getAPIInstance();
-    DatabaseHelper db;
-//    DBManager dbManager;
+
+    // Lists to hold names and images of the books
+    public static List<String> bookNames = new ArrayList<>();
+    public static List<Bitmap> bookImages = new ArrayList<>();
 
     public BookmarksRecyclerviewAdapter(Context context, List<VolumeBooks> localVolumeBooks) {
         this.context = context;
@@ -48,69 +49,13 @@ public class BookmarksRecyclerviewAdapter extends RecyclerView.Adapter<Bookmarks
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_bookmark_horizontal, parent, false);
-        final ViewHolder viewHolder = new ViewHolder(view);
-
-        viewHolder.bookmarkActiveIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                dbManager = new DBManager(context);
-//                dbManager.open();
-                db = new DatabaseHelper(context);
-
-                VolumeBooks volumeBooks1 = localVolumeBooks.get(viewHolder.getAdapterPosition());
-                itemCall2 = requestService.getBookItem(volumeBooks1.getVolumeId());
-                itemCall2.enqueue(new Callback<Item>() {
-                    @Override
-                    public void onResponse(Call<Item> call, Response<Item> response) {
-                        db.removeBookmark(volumeBooks1.getId());
-//                        dbManager.close();
-                        localVolumeBooks.remove(viewHolder.getAdapterPosition());
-                        notifyItemRemoved(viewHolder.getAdapterPosition());
-                        notifyItemChanged(viewHolder.getAdapterPosition(),localVolumeBooks.size());
-                        Toast.makeText(context,response.body().getVolumeInfo().getTitle()+" has been removed.", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Item> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                VolumeBooks volumeBooks1 = localVolumeBooks.get(viewHolder.getAdapterPosition());
-                itemCall1 = requestService.getBookItem(volumeBooks1.getVolumeId());
-                itemCall1.enqueue(new Callback<Item>() {
-                    @Override
-                    public void onResponse(Call<Item> call, Response<Item> response) {
-                        if (response.isSuccessful()) {
-                            //passing data from adapter to activity using intent
-                            Intent intent = new Intent(v.getContext(), BookInfoActivity.class);
-                            intent.putExtra("volume_id", response.body().getId());
-                            intent.putExtra("bookmark_id", volumeBooks1.getId());
-                            v.getContext().startActivity(intent);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Item> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BookmarksRecyclerviewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         VolumeBooks volumeBooks = localVolumeBooks.get(position);
         itemCall = requestService.getBookItem(volumeBooks.getVolumeId());
-
         itemCall.enqueue(new Callback<Item>() {
             @Override
             public void onResponse(Call<Item> call, Response<Item> response) {
@@ -120,6 +65,8 @@ public class BookmarksRecyclerviewAdapter extends RecyclerView.Adapter<Bookmarks
                     holder.parentLL.setVisibility(View.VISIBLE);
                     holder.RatingRB.setVisibility(View.VISIBLE);
                     holder.titleTV.setText(item.getVolumeInfo().getTitle());
+                    bookNames.add(item.getVolumeInfo().getTitle());
+
                     holder.bookmarkIV.setVisibility(View.GONE);
                     holder.bookmarkActiveIV.setVisibility(View.VISIBLE);
                     try{
@@ -171,6 +118,15 @@ public class BookmarksRecyclerviewAdapter extends RecyclerView.Adapter<Bookmarks
                     }catch (Exception e) {
                         holder.authorTV.setText(R.string.dash);
                     }
+
+                    // Add book name to the list
+
+                    // Load book image asynchronously
+                    // You can use Glide or any other library for this purpose
+                    // For simplicity, let's assume you have the image as a resource in the project
+                    Bitmap bookImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_action_name);
+                    bookImages.add(bookImage);
+                    Toast.makeText(context, bookNames.size()+ "book size"+bookImages.size(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -186,6 +142,7 @@ public class BookmarksRecyclerviewAdapter extends RecyclerView.Adapter<Bookmarks
         return localVolumeBooks.size();
     }
 
+    // ViewHolder class
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView, bookmarkActiveIV, bookmarkIV;
         TextView publisherTV, titleTV, authorTV, ratingsTV, noRatingTV;
@@ -207,5 +164,15 @@ public class BookmarksRecyclerviewAdapter extends RecyclerView.Adapter<Bookmarks
             parentLL = itemView.findViewById(R.id.parentLL);
             shimmerFrameLayout = itemView.findViewById(R.id.shimmerFrameLayout);
         }
+    }
+
+    // Method to retrieve the list of book names
+    public List<String> getBookNames() {
+        return bookNames;
+    }
+
+    // Method to retrieve the list of book images
+    public List<Bitmap> getBookImages() {
+        return bookImages;
     }
 }

@@ -71,16 +71,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return volumeBooksArrayList;
     }
-
-    //displaying all data
     public ArrayList<VolumeBooks> getAll() {
         ArrayList<VolumeBooks> volumeBooksArrayList = new ArrayList<VolumeBooks>();
-
         String selectQuery = "SELECT * FROM " + BOOKMARKTBL;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
-
-        //
         if (cursor.moveToFirst()) {
             do {
                 VolumeBooks volumeBooks = new VolumeBooks();
@@ -88,13 +83,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 volumeBooks.setVolumeId(cursor.getString(cursor.getColumnIndex(COL_VOL_ID)));
                 volumeBooks.setBookmark(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(COL_IS_BOOKMARK))));
                 volumeBooksArrayList.add(volumeBooks);
-
             } while (cursor.moveToNext());
         }
-
         return volumeBooksArrayList;
     }
-
 
     public void removeBookmark(int id) {
         SQLiteDatabase db = this.getWritableDatabase();

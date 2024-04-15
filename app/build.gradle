@@ -10,7 +10,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
-        versionName "1.2.0" //1.0 old
+        versionName "1.0" //1.0 old
         setProperty("archivesBaseName", "BookApp-$versionName")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -53,6 +53,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
     implementation 'com.jackandphantom.android:blurimage:1.2.0'
+//    implementation 'com.github.Mindinventory:LuckyWheel:v1.0.0'
+    implementation 'com.github.mmoamenn:LuckyWheel_Android:0.3.0'
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 }
