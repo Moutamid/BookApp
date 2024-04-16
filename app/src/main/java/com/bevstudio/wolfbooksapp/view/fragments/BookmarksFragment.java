@@ -163,14 +163,17 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
             shimmerFrameLayout.setVisibility(View.GONE);
         }
         wheelItems.clear();
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++)
+        {
             String bookName = list.get(i).getName();
             Log.d("names", bookName + "  names");
-            wheelItems.add(new WheelItem(Color.BLACK,
-                    BitmapFactory.decodeResource(getResources(), R.drawable.icon),
+            int color = generateRandomColor();
+            wheelItems.add(new WheelItem(color,
+                    BitmapFactory.decodeResource(getResources(), R.drawable.open_book),
                     bookName));
         }
         lwv.addWheelItems(wheelItems);
+
 
     }
 
@@ -192,4 +195,9 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
         db.close();
         super.onDestroyView();
     }
+    private int generateRandomColor() {
+        Random random = new Random();
+        return Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
+    }
+
 }
