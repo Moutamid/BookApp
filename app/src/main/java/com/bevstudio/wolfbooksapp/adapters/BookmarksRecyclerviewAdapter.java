@@ -126,7 +126,6 @@ public class BookmarksRecyclerviewAdapter extends RecyclerView.Adapter<Bookmarks
                     // For simplicity, let's assume you have the image as a resource in the project
                     Bitmap bookImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_action_name);
                     bookImages.add(bookImage);
-                    Toast.makeText(context, bookNames.size()+ "book size"+bookImages.size(), Toast.LENGTH_SHORT).show();
                 }
             }
 

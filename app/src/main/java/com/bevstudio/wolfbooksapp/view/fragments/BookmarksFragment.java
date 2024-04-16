@@ -1,11 +1,11 @@
 package com.bevstudio.wolfbooksapp.view.fragments;
 
 
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,12 +26,15 @@ import com.bevstudio.wolfbooksapp.adapters.BookmarksRecyclerviewAdapter;
 import com.bevstudio.wolfbooksapp.model.db.VolumeBooks;
 import com.bevstudio.wolfbooksapp.request.db.DatabaseHelper;
 import com.bevstudio.wolfbooksapp.vendor.InternetConnection;
+import com.bevstudio.wolfbooksapp.view.activity.BookInfoActivity;
 import com.bluehomestudio.luckywheel.LuckyWheel;
+import com.bluehomestudio.luckywheel.OnLuckyWheelReachTheTarget;
 import com.bluehomestudio.luckywheel.WheelItem;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,11 +53,13 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
     Button button;
     LuckyWheel lwv;
     List<WheelItem> wheelItems = new ArrayList<>();
+    List<WheelItem> wheelItems1 = new ArrayList<>();
 
     public BookmarksFragment() {
         // Required empty public constructor
     }
 
+    int randomNumber;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,20 +83,23 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
         bookmarksSRL.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         bookmarksSRL.setOnRefreshListener(this);
         shimmerFrameLayout.setVisibility(View.VISIBLE);
-
-        wheelItems.add(new WheelItem(Color.BLACK,
-                BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_name),
-                " "));
-
-        lwv.addWheelItems(wheelItems);
-        lwv.setTarget(1);
+        loadBookmarks();
 
         checkInternetConnection();
-        loadBookmarks();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                lwv.rotateWheelTo(2);
+                Random random = new Random();
+                randomNumber = random.nextInt(list.size());
+                lwv.rotateWheelTo(randomNumber);
+            }
+        });
+        lwv.setLuckyWheelReachTheTarget(new OnLuckyWheelReachTheTarget() {
+            @Override
+            public void onReachTarget() {
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(randomNumber-1).getLink()));
+                startActivity(intent);
             }
         });
         return view;
@@ -154,42 +162,16 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
             noConnectionLL.setVisibility(View.GONE);
             shimmerFrameLayout.setVisibility(View.GONE);
         }
-//        List<String> bookNames = bookmarksAdapter.getBookNames();
-//        List<Bitmap> bookImages = bookmarksAdapter.getBookImages();
-//        List<WheelItem> wheelItems = new ArrayList<>();
-//        for (int i = 0; i < bookNames.size(); i++) {
-//            String bookName = bookNames.get(i);
-//            Bitmap bookImage = bookImages.get(i);
+        wheelItems.clear();
+        for (int i = 0; i < list.size(); i++) {
+            String bookName = list.get(i).getName();
+            Log.d("names", bookName + "  names");
+            wheelItems.add(new WheelItem(Color.BLACK,
+                    BitmapFactory.decodeResource(getResources(), R.drawable.icon),
+                    bookName));
+        }
+        lwv.addWheelItems(wheelItems);
 
-//            WheelItem wheelItem = new WheelItem(Color.LTGRAY, bookImage, bookName);
-//            wheelItems.add(wheelItem);
-//        }
-//        lwv.addWheelItems(wheelItems);
-
-
-// Inside your activity or fragment
-        Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-
-                if (BookmarksRecyclerviewAdapter.bookNames != null) {
-                    for (int i = 0; i < BookmarksRecyclerviewAdapter.bookNames.size(); i++) {
-                        String bookName = BookmarksRecyclerviewAdapter.bookNames.get(i);
-                        Bitmap bookImage = BookmarksRecyclerviewAdapter.bookImages.get(i);
-                        Log.d("names", BookmarksRecyclerviewAdapter.bookNames.size() + "  names");
-                        wheelItems.add(new WheelItem(Color.BLACK,
-                                BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_name),
-                                bookName));
-                        handler.removeCallbacks(this);
-                    }
-
-                    lwv.addWheelItems(wheelItems);
-                }
-                handler.postDelayed(this, 3000);
-            }
-        };
-        handler.post(runnable);
     }
 
     @Override

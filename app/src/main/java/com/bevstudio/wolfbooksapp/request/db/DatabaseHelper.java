@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.bevstudio.wolfbooksapp.model.db.VolumeBooks;
 
@@ -16,6 +17,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String BOOKMARKTBL = "bookmarks_tbl";
     public static final String COL_ID = "ID";
     public static final String COL_VOL_ID = "volume_id";
+    public static final String COL_VOL_NAME = "volume_name";
+    public static final String COL_VOL_LINK = "volume_link";
     public static final String COL_IS_BOOKMARK = "is_bookmark";
 
     public DatabaseHelper(Context context) {
@@ -26,6 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + BOOKMARKTBL
             + "(" + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COL_VOL_ID + " TEXT, "
+            + COL_VOL_NAME + " TEXT, "
+            + COL_VOL_LINK + " TEXT, "
             + COL_IS_BOOKMARK + " BOOLEAN );";
 
 
@@ -48,8 +53,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(COL_ID, volumeBooks.getStr_id());
         values.put(COL_VOL_ID, volumeBooks.getVolumeId());
+        values.put(COL_VOL_NAME, volumeBooks.getName());
+        values.put(COL_VOL_LINK, volumeBooks.getLink());
         values.put(COL_IS_BOOKMARK, volumeBooks.isBookmark());
-
+        Log.d("Parameters", values+" ");
         db.insert(BOOKMARKTBL,null,values);
         db.close();
     }
@@ -81,6 +88,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 VolumeBooks volumeBooks = new VolumeBooks();
                 volumeBooks.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
                 volumeBooks.setVolumeId(cursor.getString(cursor.getColumnIndex(COL_VOL_ID)));
+                volumeBooks.setName(cursor.getString(cursor.getColumnIndex(COL_VOL_NAME)));
+                volumeBooks.setLink(cursor.getString(cursor.getColumnIndex(COL_VOL_LINK)));
                 volumeBooks.setBookmark(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(COL_IS_BOOKMARK))));
                 volumeBooksArrayList.add(volumeBooks);
             } while (cursor.moveToNext());

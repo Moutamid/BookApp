@@ -5,6 +5,8 @@ public class VolumeBooks {
     private int id;
     private String str_id;
     private String volumeId;
+    private String name;
+    private String link;
     private boolean isBookmark;
 
     public VolumeBooks() {
@@ -14,6 +16,11 @@ public class VolumeBooks {
     public VolumeBooks(String volumeId, boolean isBookmark) {
         this.volumeId = volumeId;
         this.isBookmark = isBookmark;
+    }    public VolumeBooks(String volumeId, boolean isBookmark, String name, String link ) {
+        this.volumeId = volumeId;
+        this.isBookmark = isBookmark;
+        this.name = name;
+        this.link = link;
     }
 
     public int getId() {
@@ -46,5 +53,21 @@ public class VolumeBooks {
 
     public void setBookmark(boolean bookmark) {
         isBookmark = bookmark;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

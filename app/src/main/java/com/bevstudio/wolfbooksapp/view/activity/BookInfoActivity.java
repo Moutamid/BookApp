@@ -114,9 +114,8 @@ public class BookInfoActivity extends AppCompatActivity implements View.OnClickL
         dbManager = new DBManager(this);
         dbManager.open();
         db = new DatabaseHelper(this);
-        VolumeBooks volumeBooks = new VolumeBooks(volume_id,true);
+        VolumeBooks volumeBooks = new VolumeBooks(volume_id,true, titleTV.getText().toString(), previewBTN.getText().toString());
         db.addBookmark(volumeBooks);
-
         inactiveBookmark.setVisibility(View.GONE);
         activeBookmark.setVisibility(View.VISIBLE);
         Toast.makeText(BookInfoActivity.this, title+" has been added to bookmarks.", Toast.LENGTH_LONG).show();
@@ -266,7 +265,8 @@ public class BookInfoActivity extends AppCompatActivity implements View.OnClickL
                 }
 
                 try {
-                    previewBTN.setText("Read Ebook");
+                    String webReaderLink = item.getAccessInfo().getWebReaderLink();
+                    previewBTN.setText(webReaderLink);
                     previewBTN.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:visibility="invisible"
     android:layout_marginBottom="@dimen/half_dimen"
     android:id="@+id/book_layout"
     app:ignore="NamespaceTypo">

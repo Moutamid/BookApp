@@ -59,7 +59,7 @@ public class HomeFragmentV2 extends Fragment implements SwipeRefreshLayout.OnRef
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_v2, container, false);
 
-        getActivity().setTitle("Book Shelves");
+        getActivity().setTitle("Book Roulette");
 
         homeSRL = view.findViewById(R.id.homeSRL);
         fictionRV = view.findViewById(R.id.fictionRV);
