@@ -64,16 +64,29 @@
 
         android:layout_marginTop="@dimen/default_dimen"
         android:layout_marginBottom="8dp"
-         android:visibility="gone"
+        android:visibility="gone"
         android:scrollbars="none" />
 
+        <com.adefruandta.spinningwheel.SpinningWheelView
+            android:id="@+id/wheel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            app:wheel_arrow_color="@android:color/black"
+            app:wheel_colors="@array/rainbow_dash"
+            app:wheel_items="@array/dummy"
+            app:wheel_stroke_color="#DFDFDF"
+
+
+            app:wheel_stroke_width="5dp" />
 
         <com.bluehomestudio.luckywheel.LuckyWheel
             android:id="@+id/lwv"
             app:background_color="@color/browser_actions_bg_grey"
             android:layout_width="300dp"
             android:layout_height="300dp"
-android:layout_marginTop="130dp"
+            android:layout_marginTop="130dp"
+            android:visibility="gone"
             android:layout_centerInParent="true"
             app:layout_constraintBottom_toBottomOf="@+id/shimmerFrameLayout"
             app:layout_constraintEnd_toEndOf="@+id/shimmerFrameLayout"
@@ -92,14 +105,15 @@ android:layout_marginTop="130dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="50dp"
-            android:backgroundTint="@color/colorWhite"
-            android:text="Spin"
+            android:background="@drawable/button_bg_transparent"
+            android:text="Click to Spin"
             android:id="@+id/start"
+            android:backgroundTint="#D7C5AB"
+            android:fontFamily="@font/yeseva_one"
             android:textColor="@color/browser_actions_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-/>    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintStart_toStartOf="parent" />    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

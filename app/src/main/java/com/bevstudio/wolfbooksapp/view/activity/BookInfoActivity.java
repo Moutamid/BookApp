@@ -118,7 +118,7 @@ public class BookInfoActivity extends AppCompatActivity implements View.OnClickL
         db.addBookmark(volumeBooks);
         inactiveBookmark.setVisibility(View.GONE);
         activeBookmark.setVisibility(View.VISIBLE);
-        Toast.makeText(BookInfoActivity.this, title+" has been added to bookmarks.", Toast.LENGTH_LONG).show();
+        Toast.makeText(BookInfoActivity.this, "Book has been added to wheel.", Toast.LENGTH_LONG).show();
     }
 
     private void removeFromBookmark() {
@@ -129,7 +129,7 @@ public class BookInfoActivity extends AppCompatActivity implements View.OnClickL
         db.removeBookmark(bookmark_id);
         inactiveBookmark.setVisibility(View.VISIBLE);
         activeBookmark.setVisibility(View.GONE);
-        Toast.makeText(BookInfoActivity.this, title+" has been removed from bookmarks.", Toast.LENGTH_LONG).show();
+        Toast.makeText(BookInfoActivity.this, "Books has been removed from wheel.", Toast.LENGTH_LONG).show();
 
     }
 

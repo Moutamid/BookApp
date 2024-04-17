@@ -4,8 +4,12 @@ package com.bevstudio.wolfbooksapp.view.fragments;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,17 +20,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.adefruandta.spinningwheel.SpinningWheelView;
 import com.bevstudio.wolfbooksapp.R;
 import com.bevstudio.wolfbooksapp.adapters.BookmarksRecyclerviewAdapter;
 import com.bevstudio.wolfbooksapp.model.db.VolumeBooks;
 import com.bevstudio.wolfbooksapp.request.db.DatabaseHelper;
 import com.bevstudio.wolfbooksapp.vendor.InternetConnection;
-import com.bevstudio.wolfbooksapp.view.activity.BookInfoActivity;
 import com.bluehomestudio.luckywheel.LuckyWheel;
 import com.bluehomestudio.luckywheel.OnLuckyWheelReachTheTarget;
 import com.bluehomestudio.luckywheel.WheelItem;
@@ -53,7 +58,8 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
     Button button;
     LuckyWheel lwv;
     List<WheelItem> wheelItems = new ArrayList<>();
-    List<WheelItem> wheelItems1 = new ArrayList<>();
+    List<String> wheelItems1 = new ArrayList<>();
+    SpinningWheelView wheelView;
 
     public BookmarksFragment() {
         // Required empty public constructor
@@ -67,7 +73,7 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
         View view = inflater.inflate(R.layout.fragment_bookmarks, container, false);
 
         setHasOptionsMenu(true);
-
+        wheelView = (SpinningWheelView) view.findViewById(R.id.wheel);
         lwv = view.findViewById(R.id.lwv);
         tvBookmarkCount = view.findViewById(R.id.tv_bookmarks_count);
         bookmarksRV = view.findViewById(R.id.bookmarksRV);
@@ -79,7 +85,14 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
         errorBTN = view.findViewById(R.id.errorBTN);
         button = view.findViewById(R.id.start);
 
-        getActivity().setTitle("Spin the Wheel");
+        String titleText = "Spin the Wheel";
+        int titleColor = (Color.parseColor("#D7C5AB"));
+
+        Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.inknut_antiqua_bold);
+        SpannableString spannableTitle = new SpannableString(titleText);
+        spannableTitle.setSpan(new ForegroundColorSpan(titleColor), 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableTitle.setSpan(new CustomTypefaceSpan("", typeface), 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getActivity().setTitle(spannableTitle);
         bookmarksSRL.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         bookmarksSRL.setOnRefreshListener(this);
         shimmerFrameLayout.setVisibility(View.VISIBLE);
@@ -89,19 +102,26 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Random random = new Random();
-                randomNumber = random.nextInt(list.size());
-                lwv.rotateWheelTo(randomNumber);
-            }
-        });
-        lwv.setLuckyWheelReachTheTarget(new OnLuckyWheelReachTheTarget() {
-            @Override
-            public void onReachTarget() {
+                wheelView.rotate(50, 1500, 50);
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(randomNumber-1).getLink()));
-                startActivity(intent);
             }
         });
+        wheelView.setOnRotationListener(new SpinningWheelView.OnRotationListener<String>() {
+            // Call once when start rotation
+            @Override
+            public void onRotation() {
+                Log.d("XXXX", "On Rotation");
+            }
+
+            @Override
+            public void onStopRotation(String item) {
+                int position = wheelItems1.indexOf(item);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(position).getLink()));
+                startActivity(intent);
+                Log.d("XXXX", "On Rotation"+ item);
+            }
+        });
+
         return view;
     }
 
@@ -163,6 +183,7 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
             shimmerFrameLayout.setVisibility(View.GONE);
         }
         wheelItems.clear();
+        wheelItems1.clear();
         for (int i = 0; i < list.size(); i++)
         {
             String bookName = list.get(i).getName();
@@ -171,8 +192,9 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
             wheelItems.add(new WheelItem(color,
                     BitmapFactory.decodeResource(getResources(), R.drawable.open_book),
                     bookName));
+            wheelItems1.add(bookName);
         }
-        lwv.addWheelItems(wheelItems);
+        wheelView.setItems(wheelItems1);
 
 
     }

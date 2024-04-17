@@ -1,26 +1,32 @@
 package com.bevstudio.wolfbooksapp.view.fragments;
+
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.bevstudio.wolfbooksapp.R;
 import com.bevstudio.wolfbooksapp.adapters.CategoriesRecyclerviewAdapter;
-import com.bevstudio.wolfbooksapp.vendor.InternetConnection;
 import com.bevstudio.wolfbooksapp.model.api.Books;
 import com.bevstudio.wolfbooksapp.model.api.Item;
 import com.bevstudio.wolfbooksapp.request.api.RequestService;
 import com.bevstudio.wolfbooksapp.request.api.RetrofitClass;
+import com.bevstudio.wolfbooksapp.vendor.InternetConnection;
 import com.bevstudio.wolfbooksapp.view.activity.CategoriesListActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -58,9 +64,14 @@ public class HomeFragmentV2 extends Fragment implements SwipeRefreshLayout.OnRef
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_v2, container, false);
+        String titleText = "Book Roulette";
+        int titleColor = (Color.parseColor("#D7C5AB"));
 
-        getActivity().setTitle("Book Roulette");
-
+        Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.inknut_antiqua_bold);
+        SpannableString spannableTitle = new SpannableString(titleText);
+        spannableTitle.setSpan(new ForegroundColorSpan(titleColor), 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableTitle.setSpan(new CustomTypefaceSpan("", typeface), 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getActivity().setTitle(spannableTitle);
         homeSRL = view.findViewById(R.id.homeSRL);
         fictionRV = view.findViewById(R.id.fictionRV);
         romanceRV = view.findViewById(R.id.romanceRV);
