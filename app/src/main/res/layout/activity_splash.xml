@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/txtMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="142dp"
+        android:fontFamily="@font/lexend_extra_bold"
+        android:gravity="center_horizontal"
+        android:text="Location Monitor App"
+        android:textColor="@color/app_color"
+        android:textSize="26sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="200dp"
+            android:layout_height="204dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/logo" />
+    </RelativeLayout>
+</RelativeLayout>
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+
+    <!--    android:animateLayoutChanges="true"-->
+    <!--    android:background="#fff"-->
+    <!--    tools:context=".Activities.OnBoarding.SplashActivity">-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/txtMain"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="102dp"-->
+    <!--        android:fontFamily="@font/lexend_extra_bold"-->
+    <!--        android:gravity="center_horizontal"-->
+    <!--        android:text="Welcome to Dantli Corp"-->
+    <!--        android:textColor="@color/app_color"-->
+    <!--        android:textSize="24sp" />-->
+
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="550dp">-->
+
+
+    <!--        <RelativeLayout-->
+    <!--            android:layout_width="120dp"-->
+    <!--            android:layout_height="320dp"-->
+    <!--            android:gravity="bottom"-->
+    <!--            android:layout_centerHorizontal="true"-->
+    <!--            android:layout_marginTop="302dp"-->
+    <!--            android:elevation="3dp">-->
+
+    <!--            <LinearLayout-->
+    <!--                android:id="@+id/ll"-->
+    <!--                android:layout_width="120dp"-->
+    <!--                android:layout_height="120dp"-->
+    <!--                android:layout_centerHorizontal="true"-->
+    <!--                android:background="@drawable/btn_bg"-->
+    <!--                android:backgroundTint="#FAE7EE"-->
+    <!--                android:elevation="3dp">-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/imgLogo"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="match_parent"-->
+    <!--                    android:padding="15dp"-->
+    <!--                    android:src="@drawable/logo" />-->
+
+    <!--            </LinearLayout>-->
+    <!--        </RelativeLayout>-->
+
+    <!--    </RelativeLayout>-->
+    <!--</RelativeLayout>-->

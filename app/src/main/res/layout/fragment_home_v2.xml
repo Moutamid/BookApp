@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".view.fragments.HomeFragmentV2"
     android:id="@+id/homeSRL"
-    android:background="@color/colorBlackBG">
+    android:background="@color/colorAccent">
 
     <ScrollView
             android:layout_width="match_parent"
