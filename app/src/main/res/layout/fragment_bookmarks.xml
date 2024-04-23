@@ -108,7 +108,7 @@
             android:background="@drawable/button_bg_transparent"
             android:text="Click to Spin"
             android:id="@+id/start"
-            android:backgroundTint="#006f80"
+            android:backgroundTint="#EFE0CB"
             android:fontFamily="@font/yeseva_one"
             android:textColor="@color/browser_actions_text_color"
             app:layout_constraintBottom_toBottomOf="parent"

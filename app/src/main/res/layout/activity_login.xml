@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/colorBlackBG"
 
-    tools:context=".Activities.Authentication.LoginActivity">
-
+>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +20,6 @@
             android:layout_height="140dp"
             android:layout_gravity="center"
             android:layout_marginLeft="40dp"
-            android:scaleType="centerCrop"
             android:layout_marginTop="40dp"
             android:layout_marginRight="40dp"
             android:src="@drawable/logo" />
@@ -33,14 +31,14 @@
             android:fontFamily="@font/lexend_extra_bold"
             android:text="Login"
             android:textSize="30dp"
-            android:textColor="@color/black"
+            android:textColor="@color/app_color"
             android:textStyle="bold" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="5dp"
-            android:textColor="#605D5D"
+            android:textColor="@color/app_color"
 
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/poppins_regular"
@@ -86,8 +84,9 @@
             android:fontFamily="@font/poppins_bold"
             android:gravity="end"
             android:onClick="forgot_password"
+            android:visibility="gone"
             android:text="Forgot Password?"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/app_color"
             android:textSize="12dp" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -97,11 +96,11 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="25dp"
-            android:backgroundTint="#033260"
+            android:backgroundTint="@color/app_color"
             android:background="@drawable/btn_bg"
             android:fontFamily="@font/lexend_semi_bold"
-            android:text="@string/login"
-            android:textColor="@color/white" />
+            android:text="Login"
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,8 +113,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="center"
-                android:text="@string/new_user"
-                android:textColor="@color/black"
+                android:text="New User?"
+                android:textColor="@color/app_color"
                 android:textSize="14dp" />
 
             <TextView
@@ -125,7 +124,7 @@
                 android:gravity="center"
                 android:onClick="sign_up"
                 android:layout_marginStart="10dp"
-                android:text="@string/sign_up"
+                android:text="Signup"
 
                 android:textColor="@color/app_color"
                 android:textSize="13dp" />

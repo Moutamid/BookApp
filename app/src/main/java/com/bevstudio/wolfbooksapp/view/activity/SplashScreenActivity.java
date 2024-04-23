@@ -12,10 +12,14 @@ import android.widget.ImageView;
 
 import com.bevstudio.wolfbooksapp.R;
 import com.bevstudio.wolfbooksapp.helper.Constant;
+import com.bevstudio.wolfbooksapp.view.activity.Authentication.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
     ImageView ivLogo;
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +38,16 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, NavigationActivity.class);
-                startActivity(intent);
-                finish();
+                mAuth = FirebaseAuth.getInstance();
+
+                if (mAuth.getCurrentUser() != null) {
+                    startActivity(new Intent(SplashScreenActivity.this, NavigationActivity.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                    finish();
+                }
+
             }
         }, Constant.SPLASH_TIME_OUT);
     }

@@ -11,13 +11,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bevstudio.wolfbooksapp.R;
+import com.bevstudio.wolfbooksapp.helper.Config;
+import com.bevstudio.wolfbooksapp.helper.Constants;
+import com.bevstudio.wolfbooksapp.model.UserModel;
+import com.bevstudio.wolfbooksapp.view.activity.NavigationActivity;
 import com.fxn.stash.Stash;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.moutamid.locationmonitorapp.MainActivity;
-import com.moutamid.locationmonitorapp.Model.UserModel;
-import com.moutamid.locationmonitorapp.R;
-import com.moutamid.locationmonitorapp.helper.Config;
-import com.moutamid.locationmonitorapp.helper.Constants;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -25,7 +25,7 @@ import java.util.Objects;
 public class SignupActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_GALLERY = 111;
     Calendar myCalendar = Calendar.getInstance();
-    EditText name, email, password, phone_number;
+    EditText name, email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,6 @@ public class SignupActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        phone_number = findViewById(R.id.phone_number);
     }
 
     public void login(View view) {
@@ -68,7 +67,6 @@ public class SignupActivity extends AppCompatActivity {
             UserModel userModel = new UserModel();
             userModel.name = name.getText().toString();
             userModel.email = email.getText().toString();
-            userModel.phone_number = phone_number.getText().toString();
             userModel.id = authResult.getResult().getUser().getUid();
 
             Constants.UserReference.child(Objects.requireNonNull(Constants.auth().getCurrentUser().getUid())).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -77,7 +75,7 @@ public class SignupActivity extends AppCompatActivity {
                     Stash.put("UserDetails", userModel);
                     Stash.put("is_first", true);
                     lodingbar.dismiss();
-                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                    startActivity(new Intent(SignupActivity.this, NavigationActivity.class));
                     finishAffinity();
                 }
             });
@@ -109,14 +107,7 @@ public class SignupActivity extends AppCompatActivity {
 
             return false;
 
-        } else if (phone_number.getText().toString().isEmpty()) {
-            phone_number.setError("Enter Phone Number");
-            phone_number.requestFocus();
-            Config.openKeyboard(this);
-
-            return false;
-
-        } else if (password.getText().toString().length()<8) {
+        }  else if (password.getText().toString().length()<8) {
          password.setError("Should be minimum 8 digit");
          password.requestFocus();
             Config.openKeyboard(this);

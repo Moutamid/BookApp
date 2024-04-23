@@ -14,16 +14,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bevstudio.wolfbooksapp.R;
+import com.bevstudio.wolfbooksapp.helper.Constants;
+import com.bevstudio.wolfbooksapp.model.UserModel;
+import com.bevstudio.wolfbooksapp.view.activity.NavigationActivity;
 import com.fxn.stash.Stash;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.moutamid.locationmonitorapp.MainActivity;
-import com.moutamid.locationmonitorapp.Model.UserModel;
-import com.moutamid.locationmonitorapp.R;
-import com.moutamid.locationmonitorapp.helper.Constants;
 
 import java.util.Objects;
 
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                                 UserModel userModel = snapshot.getValue(UserModel.class);
                                 Stash.put("UserDetails", userModel);
                                 lodingbar.dismiss();
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
                                 finishAffinity();
                             }
                         }
@@ -118,7 +118,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void forgot_password(View view) {
-        startActivity(new Intent(this, ResetPasswordActivity.class));
-    }
+
 }

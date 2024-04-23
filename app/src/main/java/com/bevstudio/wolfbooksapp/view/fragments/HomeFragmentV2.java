@@ -65,7 +65,7 @@ public class HomeFragmentV2 extends Fragment implements SwipeRefreshLayout.OnRef
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_v2, container, false);
         String titleText = "Book Roulette";
-        int titleColor = (Color.parseColor("#006f80"));
+        int titleColor = (Color.parseColor("#EFE0CB"));
 
         Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.inknut_antiqua_bold);
         SpannableString spannableTitle = new SpannableString(titleText);

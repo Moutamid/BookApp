@@ -130,7 +130,6 @@ public class BookInfoActivity extends AppCompatActivity implements View.OnClickL
         inactiveBookmark.setVisibility(View.VISIBLE);
         activeBookmark.setVisibility(View.GONE);
         Toast.makeText(BookInfoActivity.this, "Books has been removed from wheel.", Toast.LENGTH_LONG).show();
-
     }
 
     void displayBookItem(String id) {

@@ -15,6 +15,7 @@
     </queries>
 
     <application
+        android:name=".helper.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
@@ -22,12 +23,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.bevstudio.wolfbooksapp.view.activity.CategoriesListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.bevstudio.wolfbooksapp.view.activity.SearchActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.Authentication.SignupActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.NoActionBar" />  <activity
+            android:name=".view.activity.Authentication.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity
+            android:name="com.bevstudio.wolfbooksapp.view.activity.CategoriesListActivity"
+            android:exported="false"
+
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bevstudio.wolfbooksapp.view.activity.SearchActivity"
+            android:exported="false"
+
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.bevstudio.wolfbooksapp.view.activity.SplashScreenActivity"
+            android:exported="true"
+
             android:screenOrientation="portrait"
             android:theme="@style/WhiteThemeNoActionBar">
             <intent-filter>
@@ -42,9 +58,13 @@
 
         <activity
             android:name="com.bevstudio.wolfbooksapp.view.activity.BookInfoActivity"
+            android:exported="false"
+
             android:screenOrientation="portrait" />
         <activity
             android:name="com.bevstudio.wolfbooksapp.view.activity.NavigationActivity"
+            android:exported="false"
+
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 

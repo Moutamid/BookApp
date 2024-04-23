@@ -39,8 +39,6 @@ public class CategoriesRecyclerviewAdapter extends RecyclerView.Adapter<Categori
             @Override
             public void onClick(View v) {
                 String volumeId = items.get(viewHolder.getAdapterPosition()).getId();
-
-                //passing data from adapter to activity using intent
                 Intent intent = new Intent(v.getContext(), BookInfoActivity.class);
                 intent.putExtra("volume_id", volumeId);
                 v.getContext().startActivity(intent);

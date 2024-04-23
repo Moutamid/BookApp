@@ -23,5 +23,6 @@
     <color name="colorGray60">#999999</color>
     <color name="colorGray">#d8d8d8</color>
     <color name="black">#000</color>
-    <color name="textColor">#000</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="app_color">#EFE0CB</color>
 </resources>

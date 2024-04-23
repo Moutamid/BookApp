@@ -86,7 +86,7 @@ public class BookmarksFragment extends Fragment implements SwipeRefreshLayout.On
         button = view.findViewById(R.id.start);
 
         String titleText = "Spin the Wheel";
-        int titleColor = (Color.parseColor("#006f80"));
+        int titleColor = (Color.parseColor("#EFE0CB"));
 
         Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.inknut_antiqua_bold);
         SpannableString spannableTitle = new SpannableString(titleText);

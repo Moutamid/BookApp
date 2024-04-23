@@ -15,8 +15,10 @@ import androidx.fragment.app.Fragment;
 
 import com.bevstudio.wolfbooksapp.R;
 import com.bevstudio.wolfbooksapp.view.fragments.AboutAppFragment;
+import com.bevstudio.wolfbooksapp.view.fragments.AmazonFragment;
 import com.bevstudio.wolfbooksapp.view.fragments.BookmarksFragment;
 import com.bevstudio.wolfbooksapp.view.fragments.HomeFragmentV2;
+import com.bevstudio.wolfbooksapp.view.fragments.ShelfFragment;
 import com.bevstudio.wolfbooksapp.view.fragments.TopBooksFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -43,7 +45,7 @@ public class NavigationActivity extends AppCompatActivity implements BottomNavig
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_container, new HomeFragmentV2()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_container, new BookmarksFragment()).commit();
         }
 
     }
@@ -78,19 +80,16 @@ public class NavigationActivity extends AppCompatActivity implements BottomNavig
 
         switch (id) {
             case R.id.nav_home:
-                selectedFragment = new HomeFragmentV2();
+                selectedFragment = new ShelfFragment();
                 break;
-            case R.id.nav_search:
-                selectedFragment = new TopBooksFragment();
-                break;
-            case R.id.nav_bookmarks:
+             case R.id.nav_bookmarks:
                 selectedFragment = new BookmarksFragment();
                 break;
-            case R.id.nav_about:
-                selectedFragment = new AboutAppFragment();
+          case R.id.nav_amazon:
+                selectedFragment = new AmazonFragment();
                 break;
             default:
-                selectedFragment = new TopBooksFragment();
+                selectedFragment = new ShelfFragment();
                 break;
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.content_container, selectedFragment).commit();
