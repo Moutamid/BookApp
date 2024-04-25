@@ -68,7 +68,6 @@ public class SignupActivity extends AppCompatActivity {
             userModel.name = name.getText().toString();
             userModel.email = email.getText().toString();
             userModel.id = authResult.getResult().getUser().getUid();
-
             Constants.UserReference.child(Objects.requireNonNull(Constants.auth().getCurrentUser().getUid())).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {

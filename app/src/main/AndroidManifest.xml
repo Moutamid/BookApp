@@ -24,9 +24,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.BookInfoShelfActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.Authentication.SignupActivity"
             android:exported="false"
-            android:theme="@style/Theme.Design.NoActionBar" />  <activity
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity
             android:name=".view.activity.Authentication.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.NoActionBar" />

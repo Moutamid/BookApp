@@ -7,7 +7,10 @@ public class VolumeBooks {
     private String volumeId;
     private String name;
     private String link;
+    private String image;
     private boolean isBookmark;
+
+
 
     public VolumeBooks() {
     }
@@ -16,7 +19,15 @@ public class VolumeBooks {
     public VolumeBooks(String volumeId, boolean isBookmark) {
         this.volumeId = volumeId;
         this.isBookmark = isBookmark;
-    }    public VolumeBooks(String volumeId, boolean isBookmark, String name, String link ) {
+    }    public VolumeBooks(String volumeId, boolean isBookmark, String name, String link , String image ) {
+        this.volumeId = volumeId;
+        this.isBookmark = isBookmark;
+        this.name = name;
+        this.link = link;
+        this.image = image;
+    }
+
+    public VolumeBooks(String volumeId, boolean isBookmark, String name, String link) {
         this.volumeId = volumeId;
         this.isBookmark = isBookmark;
         this.name = name;
@@ -69,5 +80,14 @@ public class VolumeBooks {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image)
+    {
+        this.image = image;
     }
 }

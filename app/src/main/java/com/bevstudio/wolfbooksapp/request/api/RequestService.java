@@ -18,4 +18,6 @@ public interface RequestService {
 
     @GET("/books/v1/volumes")
     Call<Books> getSearchResults(@Query(value = "q") String searchText, @Query("startIndex") int startIndex, @Query("orderBy") String orderBy, @Query("maxResults") int maxResults);
+    @GET("/books/v1/volumes")
+    Call<Books> getAllBooks(@Query(value = "q") String searchText, @Query("startIndex") int startIndex, @Query("orderBy") String orderBy, @Query("maxResults") int maxResults);
 }

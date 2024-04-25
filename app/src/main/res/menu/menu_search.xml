@@ -6,7 +6,7 @@
         android:id="@+id/searchItem"
         android:icon="@drawable/ic_search_white"
         android:title="search"
-        android:visible="true"
+        android:visible="false"
         app:showAsAction="ifRoom"/>
 
 </menu>

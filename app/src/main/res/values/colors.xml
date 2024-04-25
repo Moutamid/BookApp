@@ -25,4 +25,5 @@
     <color name="black">#000</color>
     <color name="textColor">#FFFFFF</color>
     <color name="app_color">#EFE0CB</color>
+    <color name="white">#fff</color>
 </resources>

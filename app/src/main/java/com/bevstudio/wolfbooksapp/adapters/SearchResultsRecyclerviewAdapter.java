@@ -12,19 +12,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.bevstudio.wolfbooksapp.R;
 import com.bevstudio.wolfbooksapp.helper.Constant;
 import com.bevstudio.wolfbooksapp.model.api.Item;
 import com.bevstudio.wolfbooksapp.vendor.NumberFormatter;
-import com.bevstudio.wolfbooksapp.view.activity.BookInfoActivity;
+import com.bevstudio.wolfbooksapp.view.BookInfoShelfActivity;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 public class SearchResultsRecyclerviewAdapter extends RecyclerView.Adapter<SearchResultsRecyclerviewAdapter.ViewHolder> {
     private Context context;
     private List<Item> items;
-    private String bookmarkedStatus="";
+    private String bookmarkedStatus = "";
+    String name;
 
     public SearchResultsRecyclerviewAdapter(Context context, List<Item> items) {
         this.context = context;
@@ -41,9 +42,10 @@ public class SearchResultsRecyclerviewAdapter extends RecyclerView.Adapter<Searc
             @Override
             public void onClick(View v) {
                 String volumeId = items.get(viewHolder.getAdapterPosition()).getId();
-                Intent intent = new Intent(v.getContext(), BookInfoActivity.class);
+                Intent intent = new Intent(v.getContext(), BookInfoShelfActivity.class);
                 intent.putExtra("volume_id", volumeId);
-                intent.putExtra("is_bookmarked", bookmarkedStatus);
+                intent.putExtra("name", name);
+//                intent.putExtra("is_bookmarked", bookmarkedStatus);
                 v.getContext().startActivity(intent);
             }
         });
@@ -54,6 +56,7 @@ public class SearchResultsRecyclerviewAdapter extends RecyclerView.Adapter<Searc
     @Override
     public void onBindViewHolder(@NonNull SearchResultsRecyclerviewAdapter.ViewHolder holder, int position) {
         Item item = items.get(position);
+        name = item.getVolumeInfo().getTitle();
         holder.titleTV.setText(item.getVolumeInfo().getTitle());
         holder.RatingRB.setVisibility(View.VISIBLE);
 

@@ -1,9 +1,15 @@
 package com.bevstudio.wolfbooksapp.view.fragments;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +67,15 @@ public class AmazonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_amazon, container, false);
+        View view= inflater.inflate(R.layout.fragment_amazon, container, false);
+        String titleText = "Amazon";
+        int titleColor = (Color.parseColor("#EFE0CB"));
+        Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.inknut_antiqua_bold);
+        SpannableString spannableTitle = new SpannableString(titleText);
+        spannableTitle.setSpan(new ForegroundColorSpan(titleColor), 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableTitle.setSpan(new CustomTypefaceSpan("", typeface), 0, spannableTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getActivity().setTitle(spannableTitle);
+
+        return  view;
     }
 }

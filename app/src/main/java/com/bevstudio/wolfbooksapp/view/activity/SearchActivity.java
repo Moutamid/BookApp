@@ -197,7 +197,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 return false;
             }
         });
-
+        loadRelevantItemsfirst(page);
         searchQueryET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -319,6 +319,45 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+  private void callSearchResultsfirst(String orderBy, int index) {
+        search_keyword="A";
+        String finalQuery = search_keyword.replace(" ","+");
+        searchResultsCall = requestService.getSearchResults(finalQuery,index,orderBy,40);
+
+        searchResultsCall.enqueue(new Callback<Books>() {
+            @Override
+            public void onResponse(Call<Books> call, Response<Books> response) {
+                if (response.isSuccessful() || response.body() != null) {
+                    placeholderTitleTV.setVisibility(View.GONE);
+                    placeholderTextTV.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                    searchResultsRV.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                    progressBar1.setVisibility(View.GONE);
+//                    totalItemsTV.setText(response.body().getTotalItems()+" results");
+                    for (int i=0; i<response.body().getItems().size(); i++) {
+                        setUpSearchResultslist(response.body().getItems());
+                    }
+                }
+
+                if (response.code()!=200) {
+                    progressBar.setVisibility(View.GONE);
+//                    placeholderLL.setVisibility(View.VISIBLE);
+//                    placeholderTV.setText("Error : "+response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Books> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+//                placeholderLL.setVisibility(View.VISIBLE);
+//                placeholderTV.setText("Something went wrong.");
+                placeholderTitleTV.setVisibility(View.GONE);
+                placeholderTextTV.setText(R.string.something_went_wrong);
+                placeholderTextTV.setVisibility(View.VISIBLE);
+            }
+        });
+    }
 
     private void setUpSearchResultslist(List<Item> itemList) {
         searchAdapter = new SearchResultsRecyclerviewAdapter(SearchActivity.this,itemList);
@@ -328,7 +367,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         searchResultsRV.setAdapter(searchAdapter);
     }
 
-    void loadRelevantItems(int page) {
+    void loadRelevantItemsfirst(int page) {
+        sortRelevanceTV.setAlpha((float) 0.9);
+        sortNewest.setAlpha((float) 0.5);
+        searchResultsRV.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        callSearchResultsfirst("relevance",page);
+    }    void loadRelevantItems(int page) {
         sortRelevanceTV.setAlpha((float) 0.9);
         sortNewest.setAlpha((float) 0.5);
         searchResultsRV.setVisibility(View.GONE);
