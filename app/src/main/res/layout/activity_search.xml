@@ -37,7 +37,7 @@
                 android:drawablePadding="@dimen/default_dimen"
                 android:drawableTint="@color/colorGray"
                 android:fontFamily="@font/regular"
-                android:hint="Search for a book title, author, etc."
+                android:hint="Search by author name"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:paddingLeft="@dimen/dimen_15"

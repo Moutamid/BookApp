@@ -2,6 +2,7 @@ package com.bevstudio.wolfbooksapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,7 +122,8 @@ public class SearchResultsRecyclerviewAdapter extends RecyclerView.Adapter<Searc
                 default:
                     holder.authorTV.setText("By "+item.getVolumeInfo().getAuthors().get(0));
             }
-        }catch (Exception e) {
+        }
+        catch (Exception e) {
             holder.authorTV.setText(R.string.dash);
         }
     }

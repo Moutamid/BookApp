@@ -18,6 +18,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -65,6 +66,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     int page=1;
     SpeechRecognizer speechRecognizer;
     public static final Integer RecordAudioRequestCode = 1;
+    List<Item> authorsList = new ArrayList<>();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -175,63 +177,81 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 return false;
             }
         });
-
-        searchQueryET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    search_keyword = searchQueryET.getText().toString().trim();
-                    if (!searchQueryET.getText().toString().trim().isEmpty()) {
-                        loadRelevantItems(page);
-                        placeholderTitleTV.setVisibility(View.GONE);
-                        placeholderTextTV.setVisibility(View.GONE);
-                        searchResultsRV.setVisibility(View.GONE);
-                        progressBar.setVisibility(View.GONE);
-                    }else {
-                        searchResultsRV.setVisibility(View.GONE);
-                        progressBar.setVisibility(View.GONE);
-                        placeholderTitleTV.setVisibility(View.VISIBLE);
-                        placeholderTextTV.setVisibility(View.VISIBLE);
-                    }
-                }
-                return false;
-            }
-        });
-        loadRelevantItemsfirst(page);
         searchQueryET.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                clearBTN.setVisibility(View.VISIBLE);
-                micIV.setVisibility(View.GONE);
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                filter(charSequence.toString());
+
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                search_keyword = searchQueryET.getText().toString().trim();
-                if (s.length() >0 && (!searchQueryET.getText().toString().trim().isEmpty())){
-                    loadRelevantItems(page);
-                }else if (s.length() ==0 && searchQueryET.getText().toString().trim().isEmpty()){
-                    clearBTN.setVisibility(View.GONE);
-                    micIV.setVisibility(View.VISIBLE);
-                    placeholderTitleTV.setVisibility(View.VISIBLE);
-                    placeholderTextTV.setVisibility(View.VISIBLE);
-                    searchResultsRV.setVisibility(View.GONE);
-                    progressBar.setVisibility(View.GONE);
-                }else {
-                    clearBTN.setVisibility(View.GONE);
-                    micIV.setVisibility(View.VISIBLE);
-                    placeholderTitleTV.setVisibility(View.GONE);
-                    placeholderTextTV.setVisibility(View.GONE);
-                    searchResultsRV.setVisibility(View.GONE);
-                    progressBar.setVisibility(View.GONE);
-                }
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+
+
             }
         });
+//        searchQueryET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    search_keyword = searchQueryET.getText().toString().trim();
+//                    if (!searchQueryET.getText().toString().trim().isEmpty()) {
+//                        loadRelevantItems(page);
+//                        placeholderTitleTV.setVisibility(View.GONE);
+//                        placeholderTextTV.setVisibility(View.GONE);
+//                        searchResultsRV.setVisibility(View.GONE);
+//                        progressBar.setVisibility(View.GONE);
+//                    }else {
+//                        searchResultsRV.setVisibility(View.GONE);
+//                        progressBar.setVisibility(View.GONE);
+//                        placeholderTitleTV.setVisibility(View.VISIBLE);
+//                        placeholderTextTV.setVisibility(View.VISIBLE);
+//                    }
+//                }
+//                return false;
+//            }
+//        });
+        loadRelevantItemsfirst(page);
+//        searchQueryET.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                clearBTN.setVisibility(View.VISIBLE);
+//                micIV.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                search_keyword = searchQueryET.getText().toString().trim();
+//                if (s.length() >0 && (!searchQueryET.getText().toString().trim().isEmpty())){
+//                    loadRelevantItems(page);
+//                }else if (s.length() ==0 && searchQueryET.getText().toString().trim().isEmpty()){
+//                    clearBTN.setVisibility(View.GONE);
+//                    micIV.setVisibility(View.VISIBLE);
+//                    placeholderTitleTV.setVisibility(View.VISIBLE);
+//                    placeholderTextTV.setVisibility(View.VISIBLE);
+//                    searchResultsRV.setVisibility(View.GONE);
+//                    progressBar.setVisibility(View.GONE);
+//                }else {
+//                    clearBTN.setVisibility(View.GONE);
+//                    micIV.setVisibility(View.VISIBLE);
+//                    placeholderTitleTV.setVisibility(View.GONE);
+//                    placeholderTextTV.setVisibility(View.GONE);
+//                    searchResultsRV.setVisibility(View.GONE);
+//                    progressBar.setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
 //        nestedScrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
 //            @Override
@@ -360,6 +380,14 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setUpSearchResultslist(List<Item> itemList) {
+        authorsList.clear();
+        for (Item item : itemList) {
+            if (item.getVolumeInfo() != null && item.getVolumeInfo().getAuthors() != null) {
+                authorsList.add(item);
+                Log.d("dataaa", item.getVolumeInfo().getAuthors()+" data");
+            }
+        }
+
         searchAdapter = new SearchResultsRecyclerviewAdapter(SearchActivity.this,itemList);
         layoutManager = new LinearLayoutManager(SearchActivity.this,LinearLayoutManager.VERTICAL,false);
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager, this);
@@ -416,4 +444,33 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         callSearchResults("relevance", page);
         Toast.makeText(SearchActivity.this, "hello", Toast.LENGTH_SHORT).show();
     }
+
+    private void filter(String text) {
+        // creating a new array list to filter our data.
+        ArrayList<Item> filteredlist = new ArrayList<Item>();
+
+        // running a for loop to compare elements.
+        for (Item item : authorsList) {
+            if (item.getVolumeInfo().getAuthors().get(0).toLowerCase().contains(text.toLowerCase())) {
+                filteredlist.add(item);
+            }
+        }
+
+        Log.d("itemssss", filteredlist+"   " );
+        searchAdapter = new SearchResultsRecyclerviewAdapter(SearchActivity.this,filteredlist);
+        layoutManager = new LinearLayoutManager(SearchActivity.this,LinearLayoutManager.VERTICAL,false);
+        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager, this);
+        searchResultsRV.setLayoutManager(layoutManager);
+        searchResultsRV.setAdapter(searchAdapter);
+//        if (filteredlist.isEmpty()) {
+//            content_rcv.setVisibility(View.GONE);
+//        } else {
+//            content_rcv.setVisibility(View.VISIBLE);
+////            my_adapter.filterList(filteredlist);
+//            my_adapter = new CategoryproductAdapter(filteredlist, AllCategoriesActivity.this);
+//            content_rcv.setAdapter(my_adapter);
+//            my_adapter.notifyDataSetChanged();
+//        }
+    }
+
 }

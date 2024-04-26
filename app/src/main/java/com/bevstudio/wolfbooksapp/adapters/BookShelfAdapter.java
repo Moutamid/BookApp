@@ -51,8 +51,6 @@ public class BookShelfAdapter extends RecyclerView.Adapter<BookShelfAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BookShelf bookShelf = bookShelfList.get(position);
         holder.categoryTextView.setText(bookShelf.getCategory());
-        Log.d("dataaa", bookShelf.getCategory() + "  dataa");
-
         holder.ad_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,17 +61,14 @@ public class BookShelfAdapter extends RecyclerView.Adapter<BookShelfAdapter.View
         });
 
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-
         List<BookItem> bookItemList = new ArrayList<>();
         BookAdapter adapter = new BookAdapter(bookItemList, context);
         holder.recyclerView.setAdapter(adapter);
-
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("BookShelfApp")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("Shelf")
                 .child(bookShelf.getCategory());
-
         retrieveDataFromFirebase(databaseReference, bookItemList, adapter);
     }
 
