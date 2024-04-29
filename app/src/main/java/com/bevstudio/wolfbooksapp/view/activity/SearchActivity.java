@@ -1,12 +1,5 @@
 package com.bevstudio.wolfbooksapp.view.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -31,6 +24,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bevstudio.wolfbooksapp.R;
 import com.bevstudio.wolfbooksapp.adapters.SearchResultsRecyclerviewAdapter;
 import com.bevstudio.wolfbooksapp.model.api.Books;
@@ -43,6 +43,7 @@ import com.bevstudio.wolfbooksapp.vendor.InternetConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -177,81 +178,81 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 return false;
             }
         });
-        searchQueryET.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                filter(charSequence.toString());
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                filter(editable.toString());
-
-
-            }
-        });
-//        searchQueryET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    search_keyword = searchQueryET.getText().toString().trim();
-//                    if (!searchQueryET.getText().toString().trim().isEmpty()) {
-//                        loadRelevantItems(page);
-//                        placeholderTitleTV.setVisibility(View.GONE);
-//                        placeholderTextTV.setVisibility(View.GONE);
-//                        searchResultsRV.setVisibility(View.GONE);
-//                        progressBar.setVisibility(View.GONE);
-//                    }else {
-//                        searchResultsRV.setVisibility(View.GONE);
-//                        progressBar.setVisibility(View.GONE);
-//                        placeholderTitleTV.setVisibility(View.VISIBLE);
-//                        placeholderTextTV.setVisibility(View.VISIBLE);
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-        loadRelevantItemsfirst(page);
 //        searchQueryET.addTextChangedListener(new TextWatcher() {
 //            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 //
 //            }
 //
 //            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                clearBTN.setVisibility(View.VISIBLE);
-//                micIV.setVisibility(View.GONE);
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                filter(charSequence.toString());
+//
 //            }
 //
 //            @Override
-//            public void afterTextChanged(Editable s) {
-//                search_keyword = searchQueryET.getText().toString().trim();
-//                if (s.length() >0 && (!searchQueryET.getText().toString().trim().isEmpty())){
-//                    loadRelevantItems(page);
-//                }else if (s.length() ==0 && searchQueryET.getText().toString().trim().isEmpty()){
-//                    clearBTN.setVisibility(View.GONE);
-//                    micIV.setVisibility(View.VISIBLE);
-//                    placeholderTitleTV.setVisibility(View.VISIBLE);
-//                    placeholderTextTV.setVisibility(View.VISIBLE);
-//                    searchResultsRV.setVisibility(View.GONE);
-//                    progressBar.setVisibility(View.GONE);
-//                }else {
-//                    clearBTN.setVisibility(View.GONE);
-//                    micIV.setVisibility(View.VISIBLE);
-//                    placeholderTitleTV.setVisibility(View.GONE);
-//                    placeholderTextTV.setVisibility(View.GONE);
-//                    searchResultsRV.setVisibility(View.GONE);
-//                    progressBar.setVisibility(View.GONE);
-//                }
+//            public void afterTextChanged(Editable editable) {
+//                filter(editable.toString());
+//
+//
 //            }
 //        });
+        searchQueryET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    search_keyword = searchQueryET.getText().toString().trim();
+                    if (!searchQueryET.getText().toString().trim().isEmpty()) {
+                        loadRelevantItems(page);
+                        placeholderTitleTV.setVisibility(View.GONE);
+                        placeholderTextTV.setVisibility(View.GONE);
+                        searchResultsRV.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                    }else {
+                        searchResultsRV.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                        placeholderTitleTV.setVisibility(View.VISIBLE);
+                        placeholderTextTV.setVisibility(View.VISIBLE);
+                    }
+                }
+                return false;
+            }
+        });
+        loadRelevantItemsfirst(page);
+        searchQueryET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                clearBTN.setVisibility(View.VISIBLE);
+                micIV.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                search_keyword = searchQueryET.getText().toString().trim();
+                if (s.length() >0 && (!searchQueryET.getText().toString().trim().isEmpty())){
+                    loadRelevantItems(page);
+                }else if (s.length() ==0 && searchQueryET.getText().toString().trim().isEmpty()){
+                    clearBTN.setVisibility(View.GONE);
+                    micIV.setVisibility(View.VISIBLE);
+                    placeholderTitleTV.setVisibility(View.VISIBLE);
+                    placeholderTextTV.setVisibility(View.VISIBLE);
+                    searchResultsRV.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                }else {
+                    clearBTN.setVisibility(View.GONE);
+                    micIV.setVisibility(View.VISIBLE);
+                    placeholderTitleTV.setVisibility(View.GONE);
+                    placeholderTextTV.setVisibility(View.GONE);
+                    searchResultsRV.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
 
 //        nestedScrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
 //            @Override
@@ -388,7 +389,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
-        searchAdapter = new SearchResultsRecyclerviewAdapter(SearchActivity.this,itemList);
+        searchAdapter = new SearchResultsRecyclerviewAdapter(SearchActivity.this,authorsList);
         layoutManager = new LinearLayoutManager(SearchActivity.this,LinearLayoutManager.VERTICAL,false);
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager, this);
         searchResultsRV.setLayoutManager(layoutManager);
@@ -445,32 +446,17 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         Toast.makeText(SearchActivity.this, "hello", Toast.LENGTH_SHORT).show();
     }
 
-    private void filter(String text) {
-        // creating a new array list to filter our data.
-        ArrayList<Item> filteredlist = new ArrayList<Item>();
-
-        // running a for loop to compare elements.
-        for (Item item : authorsList) {
-            if (item.getVolumeInfo().getAuthors().get(0).toLowerCase().contains(text.toLowerCase())) {
-                filteredlist.add(item);
-            }
-        }
-
-        Log.d("itemssss", filteredlist+"   " );
-        searchAdapter = new SearchResultsRecyclerviewAdapter(SearchActivity.this,filteredlist);
-        layoutManager = new LinearLayoutManager(SearchActivity.this,LinearLayoutManager.VERTICAL,false);
-        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager, this);
-        searchResultsRV.setLayoutManager(layoutManager);
-        searchResultsRV.setAdapter(searchAdapter);
-//        if (filteredlist.isEmpty()) {
-//            content_rcv.setVisibility(View.GONE);
-//        } else {
-//            content_rcv.setVisibility(View.VISIBLE);
-////            my_adapter.filterList(filteredlist);
-//            my_adapter = new CategoryproductAdapter(filteredlist, AllCategoriesActivity.this);
-//            content_rcv.setAdapter(my_adapter);
-//            my_adapter.notifyDataSetChanged();
-//        }
-    }
+//    private void filter(String text) {
+//        List<Item> filteredList = authorsList.stream()
+//                .filter(item -> item.getVolumeInfo().getAuthors().stream()
+//                        .anyMatch(author -> author.toLowerCase().contains(text.toLowerCase())))
+//                .collect(Collectors.toList());
+//        Log.d("itemssss", filteredList + "   ");
+//        searchAdapter = new SearchResultsRecyclerviewAdapter(SearchActivity.this, filteredList);
+//        layoutManager = new LinearLayoutManager(SearchActivity.this, LinearLayoutManager.VERTICAL, false);
+//        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager, this);
+//        searchResultsRV.setLayoutManager(layoutManager);
+//        searchResultsRV.setAdapter(searchAdapter);
+//    }
 
 }
